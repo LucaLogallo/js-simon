@@ -18,7 +18,7 @@ Potete partire dall’applicazione fatta in classe o (meglio :occhiolino: ) svil
 VARIABILI
 arrPC = array di numeri generati randomicamente dal pc
 arrUman = array di numeri inseriti dall'utente 
-
+arrResult = array contenente i numeri uguali tra quelli inseriti da pc e quelli dall'utente
 */
 
 $(function(){
@@ -30,8 +30,8 @@ $(function(){
 //1. Clccando su “via” il computer genera 5 numeri
   $('#start').click(function(){
     $('.rules').hide();
-    $('#numero').hide();
-    $('#numUtente').hide();
+  /*   $('#numero').hide();
+    $('#numUtente').hide(); */
     creaArrayPC(n,1,100);
     
     console.log(arrPC);
@@ -54,37 +54,40 @@ $(function(){
     
     setTimeout(function(){
       printOutput('', '#display');
-      $('#numero').show();
-      $('#numUtente').show();
+
+
+      
       $('#numUtente').click(function(){
-        printOutput('','#display');
         var a = $('#numero').val();
+        printOutput('','#numero');
         if(arrUman.includes(a) === false && arrUman.length < n){
           arrUman.push(a);
           console.log(arrUman);
+        }else if(arrUman.length = n){
+          for(var i=0; i<n; i++){
+            if(arrPC.includes(arrUman[i]) === true){
+              arrResult.push(arrUman[i]);
+            }
+          }
+    
+          if(arrResult.length>0){
+            printOutput("hai indovinato "+arrResult.length+"numeri", '#result');
+            printOutput(arrResult.toString(),'#numResult');
+          }else if(arrResult.length === n){
+            printOutput("hai indovinato tutti i numeri",'#result');
+            printOutput(arrResult.toString(),'#numResult');
+          }else{
+            console.log("perso");
+            /* 
+            printOutput('non hai indovinato nemmeno un numero. Consiglio una cura di fosforo per memoria <a href="https://www.vitaminexpress.org/it/brainpower-integratore-cervello-capsule?gclid=Cj0KCQjwyZmEBhCpARIsALIzmnLqxxsM1ClL-xnKTIPJmXmIuZhiZYsrvZ8LSfEIuXbcQUnW52A56OgaAn-rEALw_wcB">qui</a>','#result'); */
+          }
         }else{
-          printOutput('ERROR INSERIMENTO','#display');
+          printOutput("errore",'#display');
         }
       });
 
-      for(var i=0; i<n; i++){
-        if(arrPC.includes(arrUman[i]) === true){
-          arrResult.push(arrUman[i]);
-        }
-      }
-
-      if(arrResult.length>0){
-        printOutput("hai indovinato "+arrResult.length+"numeri", '#result');
-        printOutput(arrResult.toString(),'#numResult');
-      }else if(arrResult.length === n){
-        printOutput("hai indovinato tutti i numeri",'#result');
-        printOutput(arrResult.toString(),'#numResult');
-      }else{
-        console.log("perso");
-        /* 
-        printOutput('non hai indovinato nemmeno un numero. Consiglio una cura di fosforo per memoria <a href="https://www.vitaminexpress.org/it/brainpower-integratore-cervello-capsule?gclid=Cj0KCQjwyZmEBhCpARIsALIzmnLqxxsM1ClL-xnKTIPJmXmIuZhiZYsrvZ8LSfEIuXbcQUnW52A56OgaAn-rEALw_wcB">qui</a>','#result'); */
-      }
-      /* for(var i = 0; i<n ;i++){
+      /* prova mal riuscita dell'inserimento da input box 
+      for(var i = 0; i<n ;i++){
         var num = 0;
         printOutput("inserisci il "+i+"e premi invio",'#display'); 
         $('#numero').keyup(function(event){
@@ -125,67 +128,4 @@ function creaArrayPC(n,min,max){
 function printOutput(text, target){
   $(target).text(text);
 }
-})
-
-
-
-
-
-
-/* 
-
-$(document).ready(function(){
-//console.log('ciao')
-
-//Inserisco in un input un numero che indica quanto è lungo il countdown
-//visualizzo l'input e il bottone start
-//2 al click di 'Start' parte il countdown, scompare il campo di input e visualizzo il countdown
-//3 al termine del countdown visualizzo 'Fine' e un bottone per ripartire
-
-    var countdown = 0;
-    var clock;
-    $('#ricomincia').hide();
-
-    $('#btn').click(function(){
-
-        countdown = $('#input').val();
- //console.log(countdown);
-
-        $('#input').hide();
-        $('#btn').hide();
-        printOutput(countdown,'#display');
-
-        clock = setInterval(function(){
-            countdown--;
-            printOutput(countdown,'#display');
-
-            if(countdown === 0){
-                clearInterval(clock);
-                setTimeout(function(){
-                    printOutput('Finito', '#display');
-                    $('#ricomincia').show();
-                    $('#input').val('');
-                },1000);
-                
-            }
-        },1000);
-    
-
-    })// END CLICK BTN
-
-    $('#ricomincia').click(function(){
-        printOutput('Inserisci un numero', '#display');
-        $('#input').show();
-        $('#btn').show();
-        $(this).hide();
-    })
-
-
-})
-
-function printOutput(text, target){
-
-    $(target).text(text);
-}
-
-*/
+});
