@@ -18,7 +18,7 @@ Potete partire dall’applicazione fatta in classe o (meglio :occhiolino: ) svil
 VARIABILI
 arrPC = array di numeri generati randomicamente dal pc
 arrUman = array di numeri inseriti dall'utente 
-var sshow = numeri di secondi usati per il "countdown" del tempo nel quale i numeri generati dal pc devono essere mostrati
+c variabile utilizzata per la ripetizione del set interval
 
 */
 
@@ -35,7 +35,7 @@ $(function(){
 
 
   var clock ;
-  var c = 1;
+  var c = 1; //variabile utilizzata per la ripetizione del set interval
 
   printOutput(arrPC,'#display'); 
 
