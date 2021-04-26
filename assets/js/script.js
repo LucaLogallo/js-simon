@@ -18,39 +18,92 @@ Potete partire dall’applicazione fatta in classe o (meglio :occhiolino: ) svil
 VARIABILI
 arrPC = array di numeri generati randomicamente dal pc
 arrUman = array di numeri inseriti dall'utente 
-c variabile utilizzata per la ripetizione del set interval
 
 */
 
 $(function(){
   var arrPC = [];
   var arrUman = [];
+  var arrResult = [];
   var n = 5; //possiamo anche farlo inserire all'utente . Cardinalità dell'array di numeri sia di quelli generati randomicamente dal pc sia di quelli inseriti dall'utente
-
+  console.log(arrPC);
 //1. Clccando su “via” il computer genera 5 numeri
   $('#start').click(function(){
+    $('.rules').hide();
+    $('#numero').hide();
+    $('#numUtente').hide();
     creaArrayPC(n,1,100);
+    
     console.log(arrPC);
+
+    var clock;
+    var C = 4;
+
+    clock = setInterval(function(){
+      C--;
+      printOutput("pronto tra "+C,'#display');
+      if(C === 1){
+        clearInterval(clock);
+      }
+    },1000)
+
+    setTimeout(function(){
+      printOutput(arrPC.toString(),'#display'); 
+    },4000);
+    
+    
+    setTimeout(function(){
+      printOutput('', '#display');
+      $('#numero').show();
+      $('#numUtente').show();
+      $('#numUtente').click(function(){
+        printOutput('','#display');
+        var a = $('#numero').val();
+        if(arrUman.includes(a) === false && arrUman.length < n){
+          arrUman.push(a);
+          console.log(arrUman);
+        }else{
+          printOutput('ERROR INSERIMENTO','#display');
+        }
+      });
+
+      for(var i=0; i<n; i++){
+        if(arrPC.includes(arrUman[i]) === true){
+          arrResult.push(arrUman[i]);
+        }
+      }
+
+      if(arrResult.length>0){
+        printOutput("hai indovinato "+arrResult.length+"numeri", '#result');
+        printOutput(arrResult.toString(),'#numResult');
+      }else if(arrResult.length === n){
+        printOutput("hai indovinato tutti i numeri",'#result');
+        printOutput(arrResult.toString(),'#numResult');
+      }else{
+        console.log("perso");
+        /* 
+        printOutput('non hai indovinato nemmeno un numero. Consiglio una cura di fosforo per memoria <a href="https://www.vitaminexpress.org/it/brainpower-integratore-cervello-capsule?gclid=Cj0KCQjwyZmEBhCpARIsALIzmnLqxxsM1ClL-xnKTIPJmXmIuZhiZYsrvZ8LSfEIuXbcQUnW52A56OgaAn-rEALw_wcB">qui</a>','#result'); */
+      }
+      /* for(var i = 0; i<n ;i++){
+        var num = 0;
+        printOutput("inserisci il "+i+"e premi invio",'#display'); 
+        $('#numero').keyup(function(event){
+          var num = $(this).val();
+          console.log(num);
+          if(num === 13){
+            arrUman[i].push(num);
+            console.log(arrUman[i]);
+          }
+        });
+
+      } */
+    },8000);
+   
+
+
+
+
   });
-
-
-  var clock ;
-  var c = 1; //variabile utilizzata per la ripetizione del set interval
-
-  printOutput(arrPC,'#display'); 
-
-  console.log(printOutput(arrPC,'#display'));
-  clock = setInterval(function(){
-    c--;
-    if(c === 0){
-      clearInterval(clock);
-      printOutput('finito','#display');
-    }
-  }, 5000);
-
-
-
-
 
 /* FUNZIONI */
 function random(min, max) {
